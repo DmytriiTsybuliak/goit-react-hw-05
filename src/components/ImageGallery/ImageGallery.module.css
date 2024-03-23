@@ -1,0 +1,17 @@
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 60px;
+}
+
+.item {
+  display: flex;
+  max-width: 360px;
+  max-height: 250px;
+  margin: 6px;
+}
+
+.item:hover {
+  transform: scale(1.03);
+}

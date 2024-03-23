@@ -1,0 +1,16 @@
+.load {
+  display: flex;
+  justify-content: center;
+}
+
+.submitBtn {
+  background-color: #6488ea;
+}
+
+.submitBtn:hover {
+  background-color: #646cff;
+}
+.submitBtn:focus,
+.submitBtn:focus-visible {
+  outline: 4px auto #646cff;
+}
