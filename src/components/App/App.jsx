@@ -1,14 +1,15 @@
 import Navigation from '../Navigation/Navigation';
+import HomePage from '../../pages/HomePage';
+import MoviesPage from '../../pages/MoviesPage';
+import NotFoundPage from '../../pages/NotFoundPage';
+import MovieDetailsPage from '../../pages/MovieDetailsPage';
+import MovieCast from '../MovieCast/MovieCast';
+import MovieReviews from '../MovieReviews/MovieReviews';
 import './App.css';
-// import { useState, useEffect } from 'react';
-// import ImageGallery from '../ImageGallery/ImageGallery';
-// import SearchBar from '../SearchBar/SearchBar';
-// import toast, { Toaster } from 'react-hot-toast';
-// import { searchImages } from '../api';
-// import ErrorMessage from '../ErrorMessage/ErrorMessage';
-// import Loader from '../Loader/Loader';
-// import LoadMoreBtn from '../LoadMoreBtn/LoadMoreBtn';
-// import ImageModal from '../ImageModal/ImageModal';
+import { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
+import { getTrendingMovies } from '../api';
+import { Route, Routes } from 'react-router-dom';
 
 export default function App() {
   // const [searchQuery, setSearchQuery] = useState('');
@@ -18,33 +19,8 @@ export default function App() {
   // const [isLoading, setIsLoading] = useState(false);
   // const [isModalLoading, setIsModalLoading] = useState(false);
   // const [error, setError] = useState(false);
-  // const [loadMore, setLoadMore] = useState(false);
   // const [modalIsOpen, setModalIsOpen] = useState(false);
   // const [page, setPage] = useState(1);
-  // useEffect(() => {
-  //   if (searchQuery === '') {
-  //     return;
-  //   }
-  //   async function getData() {
-  //     try {
-  //       setIsLoading(true);
-  //       setError(false);
-  //       const data = await searchImages(searchQuery, page);
-  //       setGallery(prevImages => {
-  //         return [...prevImages, ...data];
-  //       });
-  //       data.length != 0
-  //         ? toast.success('Success') && setLoadMore(true)
-  //         : toast.error('No results') && setLoadMore(false);
-  //     } catch (error) {
-  //       setError(true);
-  //     } finally {
-  //       setIsLoading(false);
-  //       setSearchId('');
-  //     }
-  //   }
-  //   getData();
-  // }, [page, searchQuery]);
 
   // useEffect(() => {
   //   if (searchId === '') {
@@ -88,20 +64,15 @@ export default function App() {
   return (
     <div>
       <Navigation />
-      {/* <SearchBar onSubmit={handleSubmit} />
-      <ImageGallery data={gallery} onClick={openModal} />
-      {error && <ErrorMessage />}
-      <Toaster />
-      {isLoading && <Loader />}
-      {loadMore && <LoadMoreBtn onClick={handleLoadMore} />}
-      {modalIsOpen && (
-        <ImageModal
-          modalIsOpen={modalIsOpen}
-          closeModal={closeModal}
-          selectedImage={selectedImage}
-          isModalLoading={isModalLoading}
-        />
-      )} */}
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/movies" element={<MoviesPage />} />
+        <Route path="/movies/:movieID" element={<MovieDetailsPage />}>
+          <Route path="cast" element={<MovieCast />} />
+          <Route path="reviews" element={<MovieReviews />} />
+        </Route>
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
     </div>
   );
 }
