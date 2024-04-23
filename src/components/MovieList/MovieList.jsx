@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { getTrendingMovies } from '../api';
 import toast from 'react-hot-toast';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function MovieList({ searchBar = false }) {
-  const [movieList, setMovieList] = useState('');
+  const [movieList, setMovieList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [searchBarOption, setSearchBarOption] = useState(searchBar);
+  const location = useLocation();
 
   useEffect(() => {
     async function getData() {
@@ -27,10 +29,16 @@ export default function MovieList({ searchBar = false }) {
 
   return (
     <div>
+      {!searchBarOption && <p>Click to Search</p>}
       <ul>
-        {movieList.map(item => {
-          <li key={item.id}>{item.original_title}</li>;
-        })}
+        {searchBarOption &&
+          movieList.map(item => (
+            <li key={item.id}>
+              <Link to={`/movies/${item.id}`} state={location}>
+                {item.original_title}
+              </Link>
+            </li>
+          ))}
       </ul>
     </div>
   );
