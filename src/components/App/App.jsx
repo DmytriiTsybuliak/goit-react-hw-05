@@ -6,9 +6,6 @@ import MovieDetailsPage from '../../pages/MovieDetailsPage';
 import MovieCast from '../MovieCast/MovieCast';
 import MovieReviews from '../MovieReviews/MovieReviews';
 import './App.css';
-import { useState, useEffect } from 'react';
-import toast from 'react-hot-toast';
-import { getTrendingMovies } from '../api';
 import { Route, Routes } from 'react-router-dom';
 
 export default function App() {
