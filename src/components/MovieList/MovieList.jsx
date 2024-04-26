@@ -29,7 +29,7 @@ export default function MovieList({ searchBar = false }) {
 
   return (
     <div>
-      {!searchBarOption && <p>Click to Search</p>}
+      {/* {!searchBarOption && <p>Click to Search</p>} */}
       <ul>
         {searchBarOption &&
           movieList.map(item => (

@@ -37,6 +37,7 @@ export default function MovieReviews() {
               <p>{item.content}</p>
             </li>
           ))}
+        {selectedReviews == 0 && <p>{`We don't have any reviews for this movie.`}</p>}
       </ul>
     </div>
   );
