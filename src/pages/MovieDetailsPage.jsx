@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { Link, NavLink, Outlet, useLocation, useParams } from 'react-router-dom';
 import { getMovieByID } from '../components/api';
 import toast, { Toaster } from 'react-hot-toast';
 import clsx from 'clsx';
@@ -10,9 +10,7 @@ export default function MovieDetailsPage() {
   const [error, setError] = useState(false);
   const { movieID } = useParams();
   const [selectedMovie, setSelectedMovie] = useState(null);
-  // const location = useLocation();
-  // const params = useParams();
-  // console.log(params);
+  const backLinkRef = useRef(location.state ?? '/');
 
   useEffect(() => {
     async function getData() {
@@ -40,37 +38,44 @@ export default function MovieDetailsPage() {
 
   return (
     <div>
+      <Link to={backLinkRef.current}>Back to Home</Link>
       <Toaster />
-      <p>Details about {movieID}</p>
       {selectedMovie && (
-        <div>
-          <img src={`https://image.tmdb.org/t/p/w500/${selectedMovie.poster_path}`} alt="" />
-          <div>
+        <div className={css.container}>
+          <img
+            src={`https://image.tmdb.org/t/p/w400/${selectedMovie.poster_path}`}
+            alt={selectedMovie.original_title}
+          />
+          <div className={css.description}>
             <h1>{selectedMovie.original_title}</h1>
             <p>{`Vote Average: ${selectedMovie.vote_average.toFixed(1)}`}</p>
             <h2>Overview</h2>
             <p>{selectedMovie.overview}</p>
             <h2>Genres</h2>
-            <ul>
+            <ul className={css.list}>
               {selectedMovie.genres.map(item => (
-                <li key={item.id}>{item.name}</li>
+                <li className={css.list__item} key={item.id}>
+                  {item.name}
+                </li>
               ))}
             </ul>
           </div>
         </div>
       )}
-      <ul>
-        <li>
+      <h2>Additional information</h2>
+      <ul className={css.add_info_list}>
+        <li className={css.add_info_item}>
           <NavLink to="cast" className={makeLinkClass}>
             Cast
           </NavLink>
         </li>
-        <li>
+        <li className={css.add_info_item}>
           <NavLink to="reviews" className={makeLinkClass}>
             Reviews
           </NavLink>
         </li>
       </ul>
+      <Outlet />
     </div>
   );
 }
