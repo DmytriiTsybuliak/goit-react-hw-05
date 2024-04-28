@@ -10,7 +10,8 @@ export default function MovieDetailsPage() {
   const [error, setError] = useState(false);
   const { movieID } = useParams();
   const [selectedMovie, setSelectedMovie] = useState(null);
-  const backLinkRef = useRef(location.state ?? '/');
+  const location = useLocation();
+  const backLinkRef = useRef(location.state ?? '/movies');
 
   useEffect(() => {
     async function getData() {
@@ -19,11 +20,9 @@ export default function MovieDetailsPage() {
         setError(false);
         const data = await getMovieByID(movieID);
         setSelectedMovie(data);
-        // setMovieList(data);
         data.length != 0 ? toast.success('Success') : toast.error('No results');
       } catch (e) {
         setError(true);
-        // toast.error(e.message);
         toast.error(e.response.data.status_message);
       } finally {
         setIsLoading(false);
@@ -38,8 +37,12 @@ export default function MovieDetailsPage() {
 
   return (
     <div>
-      <Link to={backLinkRef.current}>Back to Home</Link>
+      <Link to={backLinkRef.current} className={css.btn}>
+        Back to Home
+      </Link>
       <Toaster />
+      {isLoading && <b>Loading...</b>}
+      {error && <b>HTTP error!</b>}
       {selectedMovie && (
         <div className={css.container}>
           <img

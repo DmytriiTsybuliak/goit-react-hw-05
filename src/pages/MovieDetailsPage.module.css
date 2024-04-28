@@ -49,3 +49,13 @@
   border: 1px solid black;
   border-radius: 15%;
 }
+
+.btn {
+  display: flex;
+  margin: 20px;
+  width: 110px;
+}
+
+.btn:hover {
+  color: black;
+}
