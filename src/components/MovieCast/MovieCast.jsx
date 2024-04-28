@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom';
 import css from './MovieCast.module.css';
 
 export default function MovieCast() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
   const { movieID } = useParams();
   const [selectedCast, setSelectedCast] = useState(null);
   // const defaultSRC = `https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-4-user-grey-d8fe957375e70239d6abdd549fd7568c89281b2179b5f4470e2e12895792dfa5.svg`;
@@ -12,17 +14,17 @@ export default function MovieCast() {
   useEffect(() => {
     async function getData() {
       try {
-        // setIsLoading(true);
-        // setError(false);
+        setIsLoading(true);
+        setError(false);
         const data = await getMovieCasts(movieID);
         setSelectedCast(data);
         data.length != 0 ? toast.success('Success') : toast.error('No results');
       } catch (e) {
-        // setError(true);
-        // toast.error(e.message);
+        setError(true);
+        toast.error(e.message);
         toast.error(e.response.data.status_message);
       } finally {
-        // setIsLoading(false);
+        setIsLoading(false);
       }
     }
     getData();
@@ -31,6 +33,8 @@ export default function MovieCast() {
   return (
     <div>
       <Toaster />
+      {isLoading && <b>Loading...</b>}
+      {error && <b>HTTP error!</b>}
       <h1>Casts</h1>
       <ul className={css.cast__list}>
         {selectedCast &&
