@@ -8,7 +8,7 @@ export default function MovieReviews() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const { movieID } = useParams();
-  const [selectedReviews, setSelectedReviews] = useState(null);
+  const [selectedReviews, setSelectedReviews] = useState([]);
   useEffect(() => {
     async function getData() {
       try {
@@ -41,7 +41,7 @@ export default function MovieReviews() {
               <p>{item.content}</p>
             </li>
           ))}
-        {selectedReviews == 0 && <p>{`We don't have any reviews for this movie.`}</p>}
+        {selectedReviews.length === 0 && <p>{`We don't have any reviews for this movie.`}</p>}
       </ul>
     </div>
   );

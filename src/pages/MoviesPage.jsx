@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import css from './MoviesPage.module.css';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import { searchMovieQuery } from '../components/api';
 import { useSearchParams } from 'react-router-dom';
 import MovieList from '../components/MovieList/MovieList';
@@ -18,7 +18,7 @@ export default function MoviesPage() {
         setIsLoading(true);
         setError(false);
         setFilteredList([]);
-        if (query == ' ') return;
+        if (query === ' ') return;
         const data = await searchMovieQuery(query);
         setFilteredList(data);
       } catch (e) {
@@ -43,13 +43,14 @@ export default function MoviesPage() {
 
   return (
     <div>
+      <Toaster />
       <form onSubmit={handleSubmit} className={css.form}>
         <input
           type="text"
           name="searchField"
           placeholder="Search movies"
           className={css.searchText}
-          onChange={params.set('query', query)}
+          onSubmit={params.set('query', query)}
         />
         <button type="submit">Submit</button>
       </form>
